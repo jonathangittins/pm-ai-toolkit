@@ -2,7 +2,7 @@
 
 **Author:** Rich Sutton
 **Date:** March 13, 2019
-**Source:** http://www.incompleteideas.net/IncsightIdeas/BitterLesson.html
+**Source:** http://www.incompleteideas.net/IncIdeas/BitterLesson.html
 
 ## Core Argument
 
