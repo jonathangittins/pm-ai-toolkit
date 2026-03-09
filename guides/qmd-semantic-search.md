@@ -17,7 +17,7 @@ PM knowledge lives in markdown files – specs, meeting notes, frameworks, resea
 ### Install
 
 ```bash
-brew install jankais3r/tap/qmd
+npm install -g @tobilu/qmd
 ```
 
 ### Index your PM docs
@@ -118,6 +118,6 @@ qmd embed
 
 ## Links
 
-- [QMD](https://github.com/jankais3r/qmd) – the search engine
+- [QMD](https://github.com/tobi/qmd) – the search engine
 - [Lenny's Podcast Transcripts](https://github.com/ChatPRD/lennys-podcast-transcripts) – 269 episodes, maintained by the [ChatPRD](https://github.com/ChatPRD) team (Claire Vo)
 - [Model Context Protocol](https://modelcontextprotocol.io/) – how QMD connects to Claude Code
