@@ -40,6 +40,7 @@ Practical write-ups on how these pieces fit together.
 | Guide | What it covers |
 |---|---|
 | [Claude Code for PMs](guides/claude-code-for-pms.md) | Setup, skills, MCP servers, daily workflow, and patterns for using Claude Code as a PM co-pilot. |
+| [Semantic Search (QMD)](guides/qmd-semantic-search.md) | Local semantic search over PM docs and external knowledge bases like podcast transcripts. Multi-collection indexing, MCP integration, cross-referencing patterns. |
 
 ## How I use this
 
