@@ -41,6 +41,7 @@ Practical write-ups on how these pieces fit together.
 |---|---|
 | [Claude Code for PMs](guides/claude-code-for-pms.md) | Setup, skills, MCP servers, daily workflow, and patterns for using Claude Code as a PM co-pilot. |
 | [Semantic Search (QMD)](guides/qmd-semantic-search.md) | Local semantic search over PM docs and external knowledge bases like podcast transcripts. Multi-collection indexing, MCP integration, cross-referencing patterns. |
+| [Terminal Notifications](guides/terminal-notifications.md) | Sound effects and tab title indicators for multi-session Claude Code. Hooks, TTY escape sequences, and the "show status while working" pattern. |
 
 ## How I use this
 
