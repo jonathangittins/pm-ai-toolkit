@@ -33,6 +33,12 @@ Claude Code skills that automate PM workflows. These are sanitised versions of w
 | [Shaping](skills/shaping/) | Collaborative solution shaping – iterating on problem definition and solution options. From [rjs/shaping-skills](https://github.com/rjs/shaping-skills). |
 | [Breadboarding](skills/breadboarding/) | Transforms workflow descriptions into affordance tables showing UI and code boundaries. From [rjs/shaping-skills](https://github.com/rjs/shaping-skills). |
 
+### Examples
+
+| Project | What it is |
+|---|---|
+| [Slack Context Reminder Bot](https://github.com/jonathangittins/slack-context-reminder-bot) | A production Slack bot that uses Claude Haiku 3.5 to check if channel messages include customer context (name, CRM link, or call recording) and sends a gentle reminder if not. Single file, Dockerised, runs on k8s. |
+
 ### Guides
 
 Practical write-ups on how these pieces fit together.
