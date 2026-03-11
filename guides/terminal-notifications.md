@@ -1,6 +1,6 @@
 # Terminal Notifications for Claude Code
 
-I run 4–6 Claude Code sessions at once. Each tab is a different task – one writing a spec, another triaging Slack, another running a data query. The problem: I never know which tab needs me. I'd switch over to find Claude had been waiting for approval for five minutes, or that a task finished ages ago while I was staring at the wrong tab.
+I run 4–6 Claude Code sessions at once. Each tab is a different task – one writing a spec, another triaging Slack, another running a data query. The problem: I never know which tab needs me. I'd switch over to find Claude had been waiting for approval for five minutes while I was staring at the wrong tab.
 
 The fix is hooks – Claude Code's built-in system for running shell commands on lifecycle events. I wired up sound effects and terminal tab title changes so I can hear and see what each session needs without checking every tab.
 
@@ -11,13 +11,13 @@ Hooks are shell commands that fire on Claude Code lifecycle events. You define t
 | Event | When it fires |
 |---|---|
 | `UserPromptSubmit` | You hit enter on a prompt |
-| `Stop` | Claude finishes responding |
-| `Notification` | Claude is idle and needs your attention |
-| `PermissionRequest` | Claude needs you to approve a tool call |
+| `Notification` | Claude needs your attention (includes permission prompts) |
 | `PostToolUseFailure` | A tool call failed |
 | `PreCompact` | Context window is being compressed |
 | `SessionStart` | A session starts or resumes |
 | `SessionEnd` | A session ends |
+
+There's also a `PermissionRequest` event that fires when Claude needs approval for a tool call, but in practice `Notification` fires at the same time and covers the same ground. Using both means double sounds. Stick with `Notification` – it catches permission prompts and any other "I'm idle, come look" moment.
 
 Full list in the [hooks reference](https://docs.anthropic.com/en/docs/claude-code/hooks).
 
@@ -32,12 +32,12 @@ Some mappings that work well:
 | Event | Sound character | What it means |
 |---|---|---|
 | Notification | Distinctive call/ring | "I need you" |
-| PermissionRequest | Short beep | "Quick approval needed" |
-| Stop | Soft chime | "I'm done" |
-| PostToolUseFailure | Sharp alert | "Something broke" |
-| PreCompact | Dramatic sting | "Context is being compressed" |
+| PostToolUseFailure | Buzzer / denied sound | "Something broke" |
+| PreCompact | Sharp alert sting | "Context is being compressed" |
 | SessionStart | Item/unlock sound | "Starting up" |
 | SessionEnd | Sign-off sound | "Shutting down" |
+
+I tried adding a sound on `Stop` (when Claude finishes responding) but dropped it. When you're actively working in the tab, you already know it's done – the sound is just noise. The sounds that earn their keep are the ones that pull you to a tab you're not looking at.
 
 ### Tab titles
 
@@ -45,7 +45,6 @@ Terminal escape sequences can set tab titles. This lets you glance at your tab b
 
 - **⚙️ working...** – Claude is processing (set on `UserPromptSubmit`)
 - **❗ needs input** – blocked, waiting for you (set on `Notification`)
-- **❓ approve?** – permission prompt (set on `PermissionRequest`)
 - **⚠️ error** – a tool failed (set on `PostToolUseFailure`)
 - **🔄 compacting** – context compression (set on `PreCompact`)
 - *(default title)* – idle, nothing happening
@@ -104,14 +103,6 @@ case "$EVENT" in
         set_tab_title "❗ needs input"
         afplay "$SOUNDS_DIR/notification.mp3" &
         ;;
-    approve)
-        set_tab_title "❓ approve?"
-        afplay "$SOUNDS_DIR/approve.mp3" &
-        ;;
-    complete)
-        # No tab title – let Claude Code reclaim it (= idle/done)
-        afplay "$SOUNDS_DIR/complete.mp3" &
-        ;;
     error)
         set_tab_title "⚠️ error"
         afplay "$SOUNDS_DIR/error.mp3" &
@@ -127,7 +118,8 @@ case "$EVENT" in
         afplay "$SOUNDS_DIR/start.mp3" &
         ;;
     exit)
-        afplay "$SOUNDS_DIR/exit.mp3" &
+        # nohup ensures sound plays even as session tears down
+        nohup afplay "$SOUNDS_DIR/exit.mp3" &>/dev/null &
         ;;
 esac
 ```
@@ -141,6 +133,8 @@ chmod +x ~/.claude/sounds/notify.sh
 The `&` after `afplay` runs the sound in the background so it doesn't block Claude Code.
 
 The `find_tty` function is necessary because hooks run in a subprocess that doesn't have direct access to your terminal. It walks up the process tree until it finds the shell process that owns the TTY, then writes escape sequences directly to that device. This works in Ghostty, iTerm2, and Terminal.app.
+
+The `nohup` on the exit sound is important – without it, the `SessionEnd` hook gets killed before the sound finishes playing, and you'll see "Hook cancelled" errors.
 
 ### 3. Configure the hooks
 
@@ -157,26 +151,6 @@ Replace `/Users/YOUR_USERNAME` with your actual home directory – tilde expansi
           {
             "type": "command",
             "command": "/Users/YOUR_USERNAME/.claude/sounds/notify.sh notification"
-          }
-        ]
-      }
-    ],
-    "PermissionRequest": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/Users/YOUR_USERNAME/.claude/sounds/notify.sh approve"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/Users/YOUR_USERNAME/.claude/sounds/notify.sh complete"
           }
         ]
       }
@@ -245,7 +219,13 @@ Hooks are loaded at session start. Restart any running sessions to pick up the c
 
 **Project settings shadow user settings.** If your repo has `.claude/settings.json` with a `hooks` key, hooks defined in `~/.claude/settings.json` won't fire. Move your notification hooks to whichever file already has your other hooks, or consolidate.
 
+**`Notification` and `PermissionRequest` fire together.** When Claude needs tool approval, both events trigger back-to-back. Use one or the other, not both – otherwise you get double sounds. `Notification` is the broader event and covers permission prompts too.
+
 **Tab titles don't persist at idle.** Claude Code resets the terminal title when it returns to the input prompt. Titles set during `Stop` or `SessionEnd` get immediately overwritten. That's why the "working/blocked" model works better than trying to show "done."
+
+**SessionEnd hooks get killed early.** The session tears down before the hook finishes. Use `nohup` to detach the sound process so it survives the session ending.
+
+**`osascript` returns lowercase app names.** If you add conditional logic based on which app is frontmost (e.g., skip sounds when the terminal is in focus), use case-insensitive comparison. `osascript` returns "ghostty" not "Ghostty."
 
 **`afplay` is macOS only.** On Linux, use `paplay` (PulseAudio) or `mpv --no-video` instead. On Windows WSL, use `powershell.exe -c '(New-Object Media.SoundPlayer "path").PlaySync()'`.
 

@@ -6,7 +6,7 @@ Someone shares a YouTube video or conference talk. You add it to your watch list
 
 ## What /ingest does
 
-- Downloads audio from YouTube (or accepts local audio/video files)
+- Downloads audio from YouTube, HLS/m3u8 streams (Maven, Mux, course platforms), or local audio/video files
 - Transcribes locally on Apple Silicon using mlx-whisper – nothing leaves your machine
 - Extracts structured knowledge: claims, frameworks, action items, quotes
 - Writes an Obsidian-ready markdown note with proper frontmatter and tags
@@ -66,7 +66,17 @@ In Claude Code:
 /ingest https://www.youtube.com/watch?v=VIDEO_ID
 ```
 
-You can also pass local files:
+You can also pass HLS/m3u8 stream URLs – common on course platforms like Maven, or any site using Mux for video hosting:
+
+```
+/ingest https://stream.mux.com/PLAYBACK_ID.m3u8?token=JWT_TOKEN
+```
+
+For streams, also provide the page URL (e.g. the Maven lesson link) so the skill can set the correct Referer header. Most video platforms use domain-level access control on their streams – the token alone isn't enough, the request needs to look like it's coming from the hosting site.
+
+To find the m3u8 URL: open the lesson page → browser DevTools → Network tab → filter by "m3u8" → copy the full URL including the token parameter.
+
+Local files work too:
 
 ```
 /ingest /path/to/recording.mp4
@@ -107,3 +117,5 @@ Each ingested note includes:
 | Transcription produces no output file | Usually a unicode filename issue. The skill sanitises filenames automatically – if you hit this, check the `/tmp/ingest/` directory for files with special characters |
 | `yt-dlp` 403 errors | Run `brew upgrade yt-dlp` – YouTube frequently changes their API and older versions break |
 | Slow transcription | Confirm you're on Apple Silicon (`uname -m` should return `arm64`). On Intel Macs, use OpenAI's whisper CLI instead (much slower but works) |
+| m3u8 stream returns "not_authorized" | The stream requires a Referer header matching the hosting domain. Provide the page URL alongside the stream URL so the skill can set it. If it still fails, the JWT token may have expired – grab a fresh one from DevTools |
+| `yt-dlp` hangs on m3u8 URLs | Known issue with token-authenticated HLS streams. The skill uses `ffmpeg` directly for m3u8 – if you're running manually, use `ffmpeg -headers "Referer: https://DOMAIN/"$'\r\n' -i "M3U8_URL" -vn -acodec libmp3lame -q:a 2 output.mp3` |
