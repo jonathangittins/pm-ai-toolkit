@@ -75,6 +75,18 @@ I run the EOD review skill at the end of each day, and one of its outputs is a t
 
 **Release announcements and support articles:** A feature launch usually needs both a Slack announcement and a help centre article. I record a video walkthrough, give Claude the transcript, and ask it to run both the [release notes](../skills/release-notes/) and [support article](../skills/support-article/) skills. It launches them as parallel sub-agents sharing the same source material – each follows its own skill independently and returns a draft. The release notes skill structures the announcement around what I emphasised in the walkthrough. The support article skill produces a self-contained folder – markdown plus a screenshot checklist – ready to zip and hand off to the support team. Running them together keeps the messaging consistent and cuts the work in half.
 
+### Weekly feedback review
+
+The EOD review's discovery lens catches product signals in real time – a customer mentions a pain point in a support channel, and it cross-references with the feedback tool on the spot. But the deeper pattern recognition – clusters of requests, momentum on existing ideas, emerging themes – needs a batch view.
+
+The [weekly feedback review](../skills/weekly-feedback-review/) runs once a week (I use Wednesday mornings during deep work time). It scans the past 7 days of feedback tool data, groups ideas by product area, identifies clusters, and flags validation candidates. The output is a triage file – a markdown table with clickable links, proposed actions, and an empty "Actual" column to fill in during review.
+
+This is a two-phase skill:
+1. **Generate** – runs unattended (mine runs on a VPS cron at 7:30 AM on Wednesdays). Scans the feedback tool, writes the triage file, and adds a link to the daily note.
+2. **Execute** – after reviewing the file, you invoke it again. It reads your triage decisions and executes: account lookups, task creation, validation assessments for promising ideas.
+
+The validation candidate step is the most valuable part. For each idea worth testing, it generates: the core assumption, existing workarounds, the cheapest test you can run this week, and the signal to watch for. The goal is "can I test this today?" not "let me plan a research programme."
+
 ### End of day
 
 The [EOD review](../skills/eod-review/) is the most architecturally interesting skill. It runs in seven steps:
@@ -102,6 +114,12 @@ Presenting 15-20 items as a numbered list and accepting triage decisions in a si
 ### Discovery lens
 
 The EOD channel scan serves two purposes: finding threads that need a reply, and mining for product signals. A support question can be fully answered but still contain a feature request or workflow pain point. The discovery lens re-scans for these signals and cross-references them with the feedback tool – match, partial match, or new. This turns daily channel monitoring into continuous discovery.
+
+### Asynchronous triage
+
+Not everything needs to be triaged interactively. The weekly feedback review writes a markdown file with proposed actions and an empty "Actual" column – then stops. I review the file later in Obsidian, fill in overrides, and pick up Phase 2 when I'm ready. This works better than real-time triage for batched work: you can click through to the feedback tool, read the customer quotes, and make a considered decision rather than a snap judgement mid-conversation.
+
+The pattern generalises: any skill that produces triage decisions can separate generation from execution. Write the proposals to a file, let the human review asynchronously, then read back the decisions and act on them.
 
 ### Frameworks in context
 

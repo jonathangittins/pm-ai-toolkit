@@ -30,6 +30,7 @@ Claude Code skills that automate PM workflows. These are sanitised versions of w
 | [Release Notes](skills/release-notes/) | Generates Slack release announcements from video transcripts. Analyses the walkthrough, structures the announcement, and outputs formatted HTML for rich-text pasting. |
 | [Support Article](skills/support-article/) | Generates help centre articles from video transcripts and demos. Includes a full style guide, screenshot workflow, and zip handoff for the support team. |
 | [EOD Review](skills/eod-review/) | End-of-day triage: scans Slack channels for unanswered questions, triages saved items and task inbox, extracts meeting follow-ups, and exports a task snapshot for the next morning. |
+| [Weekly Feedback Review](skills/weekly-feedback-review/) | Weekly batch review of customer feedback. Scans the feedback tool for new ideas and momentum, surfaces clusters and trends, and generates validation assessments for promising ideas. Two-phase: generate a triage file, then execute after async review. |
 | [Shaping](skills/shaping/) | Collaborative solution shaping – iterating on problem definition and solution options. From [rjs/shaping-skills](https://github.com/rjs/shaping-skills). |
 | [Breadboarding](skills/breadboarding/) | Transforms workflow descriptions into affordance tables showing UI and code boundaries. From [rjs/shaping-skills](https://github.com/rjs/shaping-skills). |
 
@@ -57,6 +58,7 @@ A typical day:
 - Morning: review the task snapshot exported by last night's EOD review
 - During the day: write specs, GTM plans, and release notes using the skills
 - End of day: run the EOD review to triage Slack, scan for customer signals, and prep for tomorrow
+- Weekly (Wednesday): review the feedback triage file generated overnight, fill in decisions, and run validation assessments on promising ideas
 
 The frameworks aren't just reference documents – they're loaded into Claude Code's context and applied during skill execution. The spec skill applies the inversion framework during its QA phase. The GTM skill applies the value proposition framework when drafting messaging. The decision speed framework shapes how I classify scope decisions during shaping.
 
