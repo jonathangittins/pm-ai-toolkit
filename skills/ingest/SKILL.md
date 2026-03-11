@@ -1,6 +1,6 @@
 ---
 name: ingest
-description: Ingest a YouTube video, podcast, or local audio/video file into the vault as structured knowledge. Downloads, transcribes locally with mlx-whisper, then extracts claims, frameworks, and action items into an Obsidian-ready markdown note. Use when someone shares a video or audio link and you want the knowledge captured without watching/listening. Triggers on "ingest this", "ingest this video", "transcribe this", or when given a YouTube/audio URL with intent to extract knowledge.
+description: Ingest a YouTube video, podcast, HLS/m3u8 stream, or local audio/video file into the vault as structured knowledge. Downloads, transcribes locally with mlx-whisper, then extracts claims, frameworks, and action items into an Obsidian-ready markdown note. Use when someone shares a video or audio link and you want the knowledge captured without watching/listening. Triggers on "ingest this", "ingest this video", "transcribe this", or when given a YouTube/audio/stream URL with intent to extract knowledge.
 ---
 
 # Ingest
@@ -19,14 +19,17 @@ Transcribe video/audio locally and extract structured knowledge into the vault. 
 
 The user provides one of:
 - A YouTube URL
+- An HLS/m3u8 stream URL (e.g. from Maven, Mux, or other video platforms)
 - A local video/audio file path
 - A raw transcript (skip to Step 4)
+
+If the user provides a page URL alongside a stream URL, note the page domain for the Referer header in Step 2.
 
 Optional: the user may specify a target directory. Default: `ingested/` in the project root (configure this to match your vault structure).
 
 ### Step 2: Download Audio
 
-For YouTube URLs, extract audio only. Use a sanitised filename to avoid unicode issues (yt-dlp titles often contain full-width colons, CJK characters, etc. that break mlx_whisper output):
+**For YouTube URLs**, extract audio only. Use a sanitised filename to avoid unicode issues (yt-dlp titles often contain full-width colons, CJK characters, etc. that break mlx_whisper output):
 
 ```bash
 mkdir -p /tmp/ingest
@@ -38,7 +41,28 @@ yt-dlp -x --audio-format mp3 --audio-quality 0 \
 cd /tmp/ingest && mv *.mp3 clean-filename.mp3
 ```
 
-For local files, copy to `/tmp/ingest/` with a clean filename.
+**For HLS/m3u8 stream URLs** (e.g. Mux streams from Maven, course platforms, webinar recordings):
+
+Most m3u8 streams require a Referer header matching the hosting domain. Use ffmpeg directly – yt-dlp often hangs on token-authenticated m3u8 URLs.
+
+```bash
+mkdir -p /tmp/ingest
+ffmpeg -headers "Referer: https://SOURCE_DOMAIN/"$'\r\n' \
+  -i "M3U8_URL_WITH_TOKEN" \
+  -vn -acodec libmp3lame -q:a 2 \
+  /tmp/ingest/clean-filename.mp3
+```
+
+Determining the Referer:
+- If the user provided a page URL (e.g. `maven.com/p/...`), use that domain
+- If only the stream URL is given, ask the user which site it came from
+
+After download, verify with ffprobe:
+```bash
+ffprobe -v quiet -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 /tmp/ingest/FILENAME.mp3
+```
+
+**For local files**, copy to `/tmp/ingest/` with a clean filename.
 
 Tell the user the video title and duration before proceeding.
 

@@ -10,13 +10,6 @@ description: >
 
 Generate Slack release notes for product updates from video walkthroughs.
 
-## When to Use
-
-- Announce a new feature release
-- Share a product update or enhancement
-- Communicate a cross-platform use case
-- Announce a feature moving from beta to GA
-
 ## Required Inputs
 
 ### Always Required
