@@ -108,6 +108,7 @@ Each ingested note includes:
 - **Pair with semantic search** – if you're using QMD, ingested notes are automatically indexed and searchable by meaning. A claim from a video you ingested months ago can surface during unrelated work.
 - **Non-English content** – mlx-whisper supports many languages. Claude will auto-detect or ask you to specify.
 - **Long videos (>90 min)** – Claude will warn you about transcription time. You can provide a timestamp range if you only care about part of the video.
+- **Whole YouTube channels** – if you want every episode from a channel transcribed and searchable automatically, see the [auto-ingest YouTube channel](auto-ingest-youtube-channel.md) guide.
 
 ## Troubleshooting
 
