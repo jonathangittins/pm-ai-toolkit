@@ -67,12 +67,12 @@ The subagent should:
 
 ### Step 2: Write Triage File
 
-Write the review to a weekly file (e.g. `weekly-feedback/YYYY-WNN.md`).
+Write the review to a weekly file (e.g. `weekly-feedback/YYYY-MM-DD.md`).
 
 **File structure:**
 
 ```markdown
-# Weekly Feedback Review – YYYY-WNN
+# Weekly Feedback Review – YYYY-MM-DD
 
 Date: YYYY-MM-DD
 
