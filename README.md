@@ -29,6 +29,7 @@ Claude Code skills that automate PM workflows. These are sanitised versions of w
 | [GTM Plan](skills/gtm-plan/) | Creates Go-To-Market plans through a guided section-by-section workflow. Pulls customer quotes from feedback tools, proposes tier classification, and hands off cleanly to product marketing. |
 | [Release Notes](skills/release-notes/) | Generates Slack release announcements from video transcripts. Analyses the walkthrough, structures the announcement, and outputs formatted HTML for rich-text pasting. |
 | [Support Article](skills/support-article/) | Generates help centre articles from video transcripts and demos. Includes a full style guide, screenshot workflow, and zip handoff for the support team. |
+| [Morning Review](skills/morning-review/) | Morning startup: closes yesterday's daily note, triages Slack saved items and channel threads interactively, extracts meeting follow-ups, reshuffles the task list, and generates today's daily note with priorities mapped to goals. Pairs with EOD Review. |
 | [EOD Review](skills/eod-review/) | End-of-day triage: scans Slack channels for unanswered questions, triages saved items and task inbox, extracts meeting follow-ups, and exports a task snapshot for the next morning. |
 | [Weekly Feedback Review](skills/weekly-feedback-review/) | Weekly batch review of customer feedback. Scans the feedback tool for new ideas and momentum, surfaces clusters and trends, and generates validation assessments for promising ideas. Two-phase: generate a triage file, then execute after async review. |
 | [Shaping](skills/shaping/) | Collaborative solution shaping – iterating on problem definition and solution options. From [rjs/shaping-skills](https://github.com/rjs/shaping-skills). |
@@ -55,7 +56,7 @@ Practical write-ups on how these pieces fit together.
 My daily workflow runs through Claude Code with MCP servers connecting to Slack, Canny (customer feedback), Jira, Confluence, and Things 3 (task management). The skills in this repo are the sanitised, portable layer – the patterns and methodology without the company-specific wiring.
 
 A typical day:
-- Morning: review the task snapshot exported by last night's EOD review
+- Morning: run the morning review to close yesterday, triage overnight Slack, and generate today's daily note with priorities
 - During the day: write specs, GTM plans, and release notes using the skills
 - End of day: run the EOD review to triage Slack, scan for customer signals, and prep for tomorrow
 - Weekly (Wednesday): review the feedback triage file generated overnight, fill in decisions, and run validation assessments on promising ideas
