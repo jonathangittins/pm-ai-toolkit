@@ -16,7 +16,7 @@ The result: overhead tasks take minutes instead of hours, and the time freed up 
 
 Claude Code needs a working directory. Mine is a documentation repo organised by product area, planning activities, and reference material. It's not a codebase – it's markdown files, specs, meeting notes, and frameworks. Claude reads and writes files in this repo the same way it would read and write code.
 
-The repo structure matters because it teaches Claude where things live. When I say "write a spec for Chat AI," it knows to create the file in the Chat product directory. When I say "check what customers are asking for," it knows where to find previous evidence and which feedback tool to search.
+The repo structure matters because it teaches Claude where things live. When I say "write a spec for feature X," it knows to create the file in the right product directory. When I say "check what customers are asking for," it knows where to find previous evidence and which feedback tool to search.
 
 ### CLAUDE.md: teaching Claude your context
 
@@ -55,7 +55,15 @@ The skills in this repo cover:
 - **[GTM Plan](../skills/gtm-plan/)** – Walk through a GTM template section by section, pulling customer quotes and competitive data
 - **[Release Notes](../skills/release-notes/)** – Turn a video walkthrough transcript into a formatted Slack announcement
 - **[Support Article](../skills/support-article/)** – Generate help centre articles from transcripts and demos, with screenshot workflow and zip handoff
-- **[EOD Review](../skills/eod-review/)** – Triage Slack, scan channels, extract meeting follow-ups, export a task snapshot
+- **[Morning Review](../skills/morning-review/)** – Close yesterday, triage Slack saved items and channels, extract meeting follow-ups, generate today's daily note
+- **[Framing Doc](../skills/framing-doc/)** – Turn conversation transcripts into a framing document with an explore-exploit lens
+- **[Kickoff Doc](../skills/post-kickoff-doc/)** – Turn a kickoff call transcript into a builder-facing reference document
+- **[Review PR](../skills/review-pr/)** – PM-perspective PR review: product scenarios and user flows, not code feedback
+- **[Presentation](../skills/presentation/)** – Build reveal.js slide decks with fragments, auto-animate, timelines, and quote slides
+- **[Weekly Feedback Review](../skills/weekly-feedback-review/)** – Batch review of customer feedback: surfaces clusters, trends, and validation candidates
+- **[Ingest](../skills/ingest/)** – Transcribe video/audio locally and extract structured knowledge into the vault
+- **[Shaping](../skills/shaping/)** – Collaborative solution shaping from [rjs/shaping-skills](https://github.com/rjs/shaping-skills)
+- **[Breadboarding](../skills/breadboarding/)** – Workflow descriptions to affordance tables, from [rjs/shaping-skills](https://github.com/rjs/shaping-skills)
 
 Skills are just markdown with instructions – no code required. You can write one in 30 minutes by describing the steps you already follow manually.
 
@@ -63,7 +71,7 @@ Skills are just markdown with instructions – no code required. You can write o
 
 ### Morning
 
-I run the EOD review skill at the end of each day, and one of its outputs is a task snapshot – a markdown file listing today's tasks, upcoming deadlines, and active projects. In the morning I open it, scan for what's priority, and start.
+I run the [morning review](../skills/morning-review/) skill first thing. It closes yesterday's daily note (compiling what got done, what's blocked, what's next), triages Slack saved items and channel threads interactively, extracts meeting follow-ups, reshuffles the task list, and generates today's daily note with priorities mapped to quarterly goals. The whole thing runs in one session -- about 15-20 minutes of interactive triage followed by automated note generation.
 
 ### During the day
 
@@ -77,29 +85,17 @@ I run the EOD review skill at the end of each day, and one of its outputs is a t
 
 ### Weekly feedback review
 
-The EOD review's discovery lens catches product signals in real time – a customer mentions a pain point in a support channel, and it cross-references with the feedback tool on the spot. But the deeper pattern recognition – clusters of requests, momentum on existing ideas, emerging themes – needs a batch view.
+The morning review's discovery lens catches product signals in real time – a customer mentions a pain point in a support channel, and it cross-references with the feedback tool on the spot. But the deeper pattern recognition – clusters of requests, momentum on existing ideas, emerging themes – needs a batch view.
 
 The [weekly feedback review](../skills/weekly-feedback-review/) runs once a week (I use Wednesday mornings during deep work time). It scans the past 7 days of feedback tool data, groups ideas by product area, identifies clusters, and flags validation candidates. The output is a triage file – a markdown table with clickable links, proposed actions, and an empty "Actual" column to fill in during review.
 
-This is a two-phase skill:
-1. **Generate** – runs unattended (mine runs on a VPS cron at 7:30 AM on Wednesdays). Scans the feedback tool, writes the triage file, and adds a link to the daily note.
-2. **Execute** – after reviewing the file, you invoke it again. It reads your triage decisions and executes: account lookups, task creation, validation assessments for promising ideas.
+I run this interactively on Wednesday mornings. It scans the feedback tool, presents findings for inline triage, then executes approved actions (account lookups, task creation, validation assessments) in a single session.
 
 The validation candidate step is the most valuable part. For each idea worth testing, it generates: the core assumption, existing workarounds, the cheapest test you can run this week, and the signal to watch for. The goal is "can I test this today?" not "let me plan a research programme."
 
 ### End of day
 
-The [EOD review](../skills/eod-review/) is the most architecturally interesting skill. It runs in seven steps:
-
-1. **Triage Slack saved items** – presents them as a numbered list with shortcodes: T(Project) to capture as a task, I to ignore, P to save context to a person file, D to mark done. I respond with something like `1 T(Web) 2 I 3 P 4 T(Distro)` and it processes all of them in one pass.
-2. **Triage task inbox** – same shortcode pattern for task manager inbox items.
-3. **Slack channel scan** (sub-agent) – reads configured channels, filters to today's messages, identifies unanswered threads and threads needing PM input.
-4. **Meeting follow-up scan** (sub-agent) – reads meeting note summaries, extracts action items and decisions.
-5. **Export task snapshot** (sub-agent) – reads all tasks, writes a formatted snapshot file for tomorrow morning.
-6. **Verification** (sub-agent) – checks the daily note update for completeness, date accuracy, and deduplication.
-7. **Update daily note** – writes "Done today," "Blocked," and "Priority for tomorrow" sections.
-
-Steps 3, 4, and 5 run as parallel sub-agents. This matters for two reasons: it's faster, and it keeps raw Slack messages, meeting transcripts, and task lists out of the primary context window.
+At the end of the day I fill in the "Done today," "Blocked," and "Priority for tomorrow" sections in the daily note -- or I don't. The morning review handles closing yesterday automatically the next morning using done.md, the calendar, and meeting notes. It compiles a more complete picture than I would manually at 6pm. The daily note template includes these sections as placeholders either way.
 
 ## Patterns worth stealing
 
@@ -113,7 +109,7 @@ Presenting 15-20 items as a numbered list and accepting triage decisions in a si
 
 ### Discovery lens
 
-The EOD channel scan serves two purposes: finding threads that need a reply, and mining for product signals. A support question can be fully answered but still contain a feature request or workflow pain point. The discovery lens re-scans for these signals and cross-references them with the feedback tool – match, partial match, or new. This turns daily channel monitoring into continuous discovery.
+The morning review's channel scan serves two purposes: finding threads that need a reply, and mining for product signals. A support question can be fully answered but still contain a feature request or workflow pain point. The discovery lens re-scans for these signals and cross-references them with the feedback tool -- match, partial match, or new. This turns daily channel monitoring into continuous discovery.
 
 ### Asynchronous triage
 
@@ -129,7 +125,7 @@ For ad-hoc work, I load frameworks manually. During a shaping session, I'll tell
 
 ## What doesn't work (yet)
 
-**Context window on long sessions.** Claude automatically compacts conversations as they grow, and plan mode helps manage context on complex tasks. The bigger consideration is keeping large data sets – competitive research across 3-4 competitors, raw Slack exports, full task lists – out of the primary conversation. This is why the EOD review and spec skills delegate data-heavy steps to sub-agents: each sub-agent gets its own context window, does its work, and returns only a summary.
+**Context window on long sessions.** Claude automatically compacts conversations as they grow, and plan mode helps manage context on complex tasks. The bigger consideration is keeping large data sets -- competitive research across 3-4 competitors, raw Slack exports, full task lists -- out of the primary conversation. This is why the morning review and spec skills delegate data-heavy steps to sub-agents: each sub-agent gets its own context window, does its work, and returns only a summary.
 
 **MCP server reliability.** Not all MCP servers are created equally. Slack's integration has gaps – private channels may not work with `read_channel`, rate limits can slow down channel scans, and thread replies require separate API calls. Some servers require frequent re-authentication. CLIs are a reliable fallback – tools like the Atlassian CLI or Salesforce CLI can be called directly from Claude Code via Bash, and they tend to be more stable than their MCP equivalents for heavy use.
 
@@ -145,6 +141,6 @@ For ad-hoc work, I load frameworks manually. During a shaping session, I'll tell
 
 **First skill to try:** Take the [spec-prd skill](../skills/spec-prd/) and adapt it to your own spec template. Replace the section guidance with your team's conventions, point it at your feedback tool, and adjust the writing style rules. A spec skill pays for itself the first time you use it – the customer evidence research alone saves significant time.
 
-**How to iterate:** Start with what's painful. If you spend 30 minutes every day triaging Slack, build an EOD review. If formatting release notes is tedious, build a release notes skill. If you keep copying the same spec template and filling it in manually, automate it.
+**How to iterate:** Start with what's painful. If you spend 30 minutes every morning triaging Slack, start with the morning review. If formatting release notes is tedious, build a release notes skill. If you keep copying the same spec template and filling it in manually, automate it.
 
 PM overhead follows predictable patterns, and those patterns can be encoded as instructions that Claude follows every time. You're not automating product thinking – you're automating the scaffolding around it.

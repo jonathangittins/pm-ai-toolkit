@@ -163,10 +163,10 @@ Update the file with everything executed:
 
 ## Architecture Notes
 
-**Why async triage:** Interactive triage works well for 5-10 items (like the EOD review's Slack saved items). For 20+ feedback ideas that each need clicking through to read customer quotes, async is better. You make considered decisions in your own time rather than snap judgements mid-conversation.
+**Why async triage:** Interactive triage works well for 5-10 items (like the morning review's Slack saved items). For 20+ feedback ideas that each need clicking through to read customer quotes, async is better. You make considered decisions in your own time rather than snap judgements mid-conversation.
 
 **Why weekly, not daily:** Customer feedback from sources like sales call recordings accumulates slowly – a few new ideas per day. Daily scanning adds overhead without much signal. A weekly batch lets you see clusters that daily scans miss, and the trend analysis improves with more data points.
 
 **Why validation assessments:** Most feedback tools show you what customers want but not how to test whether the idea is viable. The validation step bridges the gap between "customers asked for X" and "is X worth building?" – borrowing from lightweight product validation methodology to generate the cheapest possible test for each promising idea.
 
-**Separation of concerns with EOD review:** The EOD review's discovery lens still catches product signals in real-time Slack conversations and cross-references them with the feedback tool. This weekly skill is the deeper, batch-level review. They complement each other: daily signals → weekly patterns → monthly themes.
+**Separation of concerns with morning review:** The morning review's discovery lens catches product signals in real-time Slack conversations and cross-references them with the feedback tool. This weekly skill is the deeper, batch-level review. They complement each other: daily signals -> weekly patterns -> monthly themes.
