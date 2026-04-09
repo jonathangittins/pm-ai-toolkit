@@ -1,6 +1,6 @@
 # pm-ai-toolkit
 
-I'm a Senior Product Manager at [Chili Piper](https://www.chilipiper.com), building AI-native PM workflows with [Claude Code](https://docs.anthropic.com/en/docs/claude-code). This repo contains the frameworks I apply to product decisions and the skills that automate spec writing, GTM planning, and release communication. It's a working system, not a template collection – everything here runs in production on real product work.
+I'm a Lead Product Manager at [Chili Piper](https://www.chilipiper.com), building AI-native PM workflows with [Claude Code](https://docs.anthropic.com/en/docs/claude-code). This repo contains the frameworks I apply to product decisions and the skills that automate spec writing, GTM planning, and release communication. It's a working system, not a template collection – everything here runs in production on real product work.
 
 At Chili Piper I own Chat AI and Concierge (our website conversion products). I also work on Chili Piper's [MCP server](https://modelcontextprotocol.io/) for managing Chili Piper through any AI tool or LLM, and our AI-driven asset creation tools.
 
