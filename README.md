@@ -51,6 +51,7 @@ Practical write-ups on how these pieces fit together.
 | Guide | What it covers |
 |---|---|
 | [Claude Code for PMs](guides/claude-code-for-pms.md) | Setup, skills, MCP servers, daily workflow, and patterns for using Claude Code as a PM co-pilot. |
+| [Atlassian CLI](guides/atlassian-cli.md) | Practical reference for `acli` (Jira) and REST API (Confluence). Covers ADF formatting, auth, common pitfalls, and when to use which tool. |
 | [Semantic Search (QMD)](guides/qmd-semantic-search.md) | Local semantic search over PM docs and external knowledge bases like podcast transcripts. Multi-collection indexing, MCP integration, cross-referencing patterns. |
 | [Terminal Notifications](guides/terminal-notifications.md) | Sound effects and tab title indicators for multi-session Claude Code. Hooks, TTY escape sequences, and the "show status while working" pattern. |
 
