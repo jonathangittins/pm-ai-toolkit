@@ -135,7 +135,7 @@ For ad-hoc work, I load frameworks manually. During a shaping session, I'll tell
 
 ## Getting started
 
-**Install Claude Code** if you haven't already – see the [official docs](https://docs.anthropic.com/en/docs/claude-code). I use Claude Opus 4.6.
+**Install Claude Code** if you haven't already – see the [official docs](https://docs.anthropic.com/en/docs/claude-code).
 
 **Minimum viable setup:** A repo with markdown files, a `CLAUDE.md` that describes your product context, and one MCP server connected to a tool you use daily. That's enough to start seeing value.
 

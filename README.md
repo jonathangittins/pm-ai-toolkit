@@ -8,31 +8,7 @@ At Chili Piper I own Chat AI and Concierge (our website conversion products). I 
 
 ### Frameworks
 
-Thinking tools I use for product decisions. Each one credits its original source.
-
-| Framework | What it does |
-|---|---|
-| [Decision Speed](frameworks/decision-speed.md) | Classify decisions as reversible or irreversible, then match the process to the stakes. Based on Bezos's Type 1/Type 2 model. |
-| [Inversion](frameworks/inversion.md) | Pre-mortem for features. Ask "how do we fail?" across spec, QA, and rollout phases. |
-| [Value Proposition](frameworks/value-proposition.md) | The Opposite Test – if the opposite of your claim is absurd, the claim is meaningless. |
-| [LNO Effectiveness](frameworks/lno-effectiveness.md) | Classify tasks as Leverage, Neutral, or Overhead. Spend effort accordingly. |
-| [Communication](frameworks/communication.md) | Writing rules for PM communication. Prune words, hook the reader, use active voice. |
-| [Bitter Lesson](frameworks/bitter-lesson.md) | Rich Sutton's essay on why general methods that scale computation beat hand-crafted approaches – and what that means for product strategy. |
-| [AI Product Evals](frameworks/ai-product-evals.md) | "Evals are the new PRDs." Define measurable evaluation criteria for AI products – what the model should do and what counts as success. |
-| [Antifragility & Barbell](frameworks/antifragility-barbell.md) | Avoid the moderate-confidence middle. 80-90% on safe proven bets, 10-20% on high-uncertainty experiments. From Taleb. |
-| [Eigenquestions](frameworks/eigenquestions.md) | Find the single question that, once answered, makes downstream questions easier or irrelevant. From Shishir Mehrotra. |
-| [Feedback Sharing (GAIN)](frameworks/feedback-sharing.md) | Frame feedback around what you want more of, not just less of. Goal-Action-Impact-Next-step structure. From Lenny Rachitsky. |
-| [Five-Step Improvement](frameworks/five-step-improvement.md) | Make requirements less dumb → delete → simplify → speed up → automate. The order matters; reversing wastes effort. |
-| [Four Fits](frameworks/four-fits.md) | Diagnose growth bottlenecks across Market-Product, Product-Channel, Channel-Model, and Model-Market. From Brian Balfour. |
-| [Gittins Index](frameworks/gittins-index.md) | Score roadmap options by what you know plus what you could still learn. Mathematically optimal explore-exploit policy. |
-| [JTBD Switching Threshold](frameworks/jtbd-switching.md) | Switching = (Pushes + Pulls) - (Habits + Anxieties). Customers don't switch to better products – they switch when staying gets too painful. |
-| [Next Feature Fallacy](frameworks/next-feature-fallacy.md) | New features only reach already-engaged users. If people aren't using what you built, more won't save you. From Andrew Chen. |
-| [On Agency](frameworks/on-agency.md) | Agency is a compound skill: act → observe → update → act bigger. Built via feedback loop, not a fixed trait. From Henrik Karlsson. |
-| [Operating Principles](frameworks/operating-principles.md) | The gap between good and great PMs is operating posture, not effort. Self-assessment dimensions from Shreyas Doshi. |
-| [Problem Articulation](frameworks/problem-articulation.md) | Run dashboards (data-driven) and hypotheses (strategy-driven) in parallel; the insight lives where they disagree. |
-| [Prospect Theory](frameworks/prospect-theory.md) | Losses feel ~2x more painful than equivalent gains. Drives over-protection of what exists, under-investment in what could be. From Kahneman & Tversky. |
-| [SCQA / Pyramid](frameworks/scqa-pyramid.md) | Lead with the answer, structure evidence underneath. Situation-Complication-Question-Answer for exec communication. From Barbara Minto. |
-| [The Taste Gap](frameworks/taste-gap.md) | Your taste develops faster than your ability. The gap closes through volume, not study. From Ira Glass. |
+Thinking tools I apply to product decisions. Each one credits its original source. [Browse all 21 in `frameworks/`](frameworks/).
 
 ### Skills
 
