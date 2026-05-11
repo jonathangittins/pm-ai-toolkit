@@ -24,15 +24,29 @@ Write product specifications through a phased workflow: gather context, research
 2. **Accept context in any form** – voice transcriptions, bullet points, links, stream of consciousness. Don't force structure at this stage.
 3. **Ask clarifying questions** – but only after the user has done their initial dump. Focus on gaps that affect the spec structure: scope boundaries, success metrics, rollout approach.
 
-### Phase 2: Customer Evidence Research
+### Phase 2: Customer & Competitive Evidence
 
-Always search your feedback tool before the first draft, even if the user hasn't provided a link. Customer evidence shapes the problem statement, use cases, and business value – not just a "Customer Requests" section.
+Always search before the first draft, even if the user hasn't provided links. Customer evidence shapes the problem statement, use cases, and business value – not just a "Customer Requests" section.
 
-**What to extract:**
+Two complementary layers:
+
+**Customer feedback** (what customers ask for) – your feedback tool, support tickets, review sites:
 - Request count, linked accounts, priority ratings
 - Account names, revenue data from idea/request fields
 - Verbatim customer quotes – these go in the Evidence section and inform the Problem statement
 - Source attribution (sales calls, support tickets, review sites)
+
+**Sales/competitive evidence** (why deals are won or lost) – CRM closed-lost analysis, win/loss interviews, G2/review-site themes:
+- Closed-lost reasons mentioning this feature area or gap
+- Product gap patterns across multiple deals
+- Customer quotes from deal analyses – these come from sales cycles, not support/feedback
+- Competitor win rates and positioning for the Competitive Landscape section in Phase 4
+
+**How both feed the spec:**
+- **Problem / Current State** – loss patterns show the cost of not solving this
+- **Why Now** – closed-lost ARR quantifies urgency
+- **Evidence & Inputs** – deal quotes alongside feedback quotes (mark the source clearly)
+- **Competitive Landscape** – sales-intel adds quantitative win-rate data that web research can't surface
 
 ### Phase 3: First Draft
 
@@ -56,6 +70,10 @@ Always search your feedback tool before the first draft, even if the user hasn't
 - **Competitive Landscape**: Table with Competitor, What they offer, and Gap columns. Populated in Phase 4.
 - **Measuring Success**: Tie back to the hypothesis. North star metric + 2-3 supporting metrics.
 - **Glossary**: Only terms introduced by this feature or that have domain-specific meaning.
+- **Key Decisions Log**: Product/scope decisions and *why* (deferred to V2, dropped, chose A over B). Different from Changelog – this is product memory, not document history. Add entries as decisions are made.
+- **Timeline**: *Optional.* Include only when stakeholders need a visible milestone view (launches, exec readouts, multi-team coordination). Skip for most specs – your tracker covers delivery state.
+- **Changelog**: 3-5 meta-event rows with links – not commit-level edits. Version control covers the line-level audit trail. Skip rows like "fixed typo".
+- **Original review footer**: One line linking to the PR or thread where the spec was first reviewed. Lets future readers find the discussion behind the current shape.
 
 ### Phase 4: Competitive Research
 
@@ -102,6 +120,23 @@ Before publishing, test the spec with a fresh sub-agent that has no conversation
 
 Offer to publish when the user is satisfied. Convert the markdown spec to the wiki's storage format and create the page via API.
 
+### Phase 8: Feature index update (optional)
+
+If you maintain a feature index (a single file tracking each feature with its spec, release notes, and support article links), update the row for this feature:
+
+- If the feature doesn't have a row yet, add one in the correct product area table
+- Update the Spec column to link to the new/updated spec
+- Fill in any other columns that are now known (tracking ticket, design link, etc.)
+- If the feature's status has changed, update the Status column
+
+### Phase 9: Roadmap card check (optional)
+
+If you maintain a roadmap with a Kanban board, check whether the feature has a card in the **Shaping** column. If it does, ask:
+
+> "Spec is done – move [initiative name] from Shaping → Next on the roadmap?"
+
+If confirmed, edit the roadmap file to move the card. If the initiative isn't on the board, mention it – it may need adding.
+
 ## Writing Style
 
 - **Dashes**: Don't use em dashes (—)
@@ -111,6 +146,8 @@ Offer to publish when the user is satisfied. Convert the markdown spec to the wi
 - **Active voice**: "CRM lookup needs email first" not "The unlock isn't building the lookup – it's getting the identifier first"
 - **Let tables speak**: Don't narrate what a table already shows.
 - **AI/LLM prompts**: When the feature involves system prompts or LLM behaviour, include example phrasings and expected outputs in the spec. Prompts increasingly require deep domain knowledge, so treat them as a PM deliverable – not something to hand off without context. Spec the intent and evaluation criteria, not just the copy.
+- **System prompt examples**: Use "For example:" framing, not prescriptive wording. Engineering owns the final implementation.
+- **Engineer-facing notes**: Don't add "@engineer" callouts in the spec body. Engineers are tagged in wiki comments, not inline.
 
 ## Key Patterns
 
