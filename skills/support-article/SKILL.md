@@ -30,11 +30,19 @@ When both a support article and release notes are needed for the same feature, r
 ## Process
 
 ### Step 1: Gather Context
-Ask for missing required inputs. If similar articles exist:
+Ask for missing required inputs.
+
+**Auto-search for related help-centre articles** (if you have a searchable help-centre index):
+Search for existing articles on the same topic. If one exists:
+- Read it in full to see what's already documented
+- Use it as the baseline – identify what needs updating, what's missing, and what's changed
+- Present a summary: "There's an existing article covering X. Here's what needs updating: [diff]"
+
+If similar articles exist outside any indexed collection:
 - Request PDFs or URLs of reference articles
 - Analyse their structure to match the established pattern
 
-If no similar articles exist (net-new feature):
+If no existing article is found (net-new feature):
 - Determine article type (see Article Types below)
 - Use the appropriate template pattern
 
@@ -267,6 +275,21 @@ Pass the subagent the article file and these instructions:
 > ```
 
 If issues are found, fix them before presenting the article for approval.
+
+## Step 7: Feature index update (optional)
+
+If you maintain a feature index (a single file tracking each feature with its spec, release notes, and support article links), update the row for this feature:
+
+- Update the Support Article column to link to the new article
+- Fill in any other columns that became known during the process
+
+## Step 8: Roadmap card check (optional)
+
+If you maintain a roadmap with a Kanban board (Now / Ship Prep / Live columns), check whether the feature has a card in **Ship Prep**. If it does, ask:
+
+> "Support article done – move [initiative name] from Ship Prep → Live on the roadmap?"
+
+If confirmed, edit the roadmap file to move the card.
 
 ## Key Patterns
 
