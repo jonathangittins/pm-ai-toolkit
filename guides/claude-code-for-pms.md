@@ -60,7 +60,7 @@ The skills in this repo cover:
 - **[Kickoff Doc](../skills/post-kickoff-doc/)** – Turn a kickoff call transcript into a builder-facing reference document
 - **[Review PR](../skills/review-pr/)** – PM-perspective PR review: product scenarios and user flows, not code feedback
 - **[Presentation](../skills/presentation/)** – Build reveal.js slide decks with fragments, auto-animate, timelines, and quote slides
-- **[Weekly Feedback Review](../skills/weekly-feedback-review/)** – Batch review of customer feedback: surfaces clusters, trends, and validation candidates
+- **[Weekly Review](../skills/weekly-review/)** – Monday checkpoint: backlog hygiene, roadmap delta, signal carryover, a blind-spots prompt, and support-ticket clusters – all proposal-only
 - **[Ingest](../skills/ingest/)** – Transcribe video/audio locally and extract structured knowledge into the vault
 - **[Shaping](../skills/shaping/)** – Collaborative solution shaping from [rjs/shaping-skills](https://github.com/rjs/shaping-skills)
 - **[Breadboarding](../skills/breadboarding/)** – Workflow descriptions to affordance tables, from [rjs/shaping-skills](https://github.com/rjs/shaping-skills)
@@ -83,15 +83,11 @@ I run the [morning review](../skills/morning-review/) skill first thing. It clos
 
 **Release announcements and support articles:** A feature launch usually needs both a Slack announcement and a help centre article. I record a video walkthrough, give Claude the transcript, and ask it to run both the [release notes](../skills/release-notes/) and [support article](../skills/support-article/) skills. It launches them as parallel sub-agents sharing the same source material – each follows its own skill independently and returns a draft. The release notes skill structures the announcement around what I emphasised in the walkthrough. The support article skill produces a self-contained folder – markdown plus a screenshot checklist – ready to zip and hand off to the support team. Running them together keeps the messaging consistent and cuts the work in half.
 
-### Weekly feedback review
+### Weekly review
 
-The morning review's discovery lens catches product signals in real time – a customer mentions a pain point in a support channel, and it cross-references with the feedback tool on the spot. But the deeper pattern recognition – clusters of requests, momentum on existing ideas, emerging themes – needs a batch view.
+The morning review handles daily triage; the [weekly review](../skills/weekly-review/) is the Monday-morning checkpoint between daily and monthly. It runs proposal-only and produces a single 10-minute file with: backlog hygiene candidates from the active task file, roadmap delta vs last week (compared via git), signal carryover from the past 7 days of morning-review output, a long-context blind-spots prompt, stale-tasks-per-project, and support-ticket clusters by team. The skill never edits the live task list, roadmap, or project files – I act on the proposals manually.
 
-The [weekly feedback review](../skills/weekly-feedback-review/) runs once a week (I use Wednesday mornings during deep work time). It scans the past 7 days of feedback tool data, groups ideas by product area, identifies clusters, and flags validation candidates. The output is a triage file – a markdown table with clickable links, proposed actions, and an empty "Actual" column to fill in during review.
-
-I run this interactively on Wednesday mornings. It scans the feedback tool, presents findings for inline triage, then executes approved actions (account lookups, task creation, validation assessments) in a single session.
-
-The validation candidate step is the most valuable part. For each idea worth testing, it generates: the core assumption, existing workarounds, the cheapest test you can run this week, and the signal to watch for. The goal is "can I test this today?" not "let me plan a research programme."
+The two layers that earn their keep are signal carryover and blind-spots. Signal carryover catches clusters that recurred 3+ times in daily reviews but didn't get acted on. The blind-spots step runs a long-context prompt against a recent slice of work asking what patterns aren't being caught. Both do work that a daily review can't see.
 
 ### End of day
 
