@@ -1,10 +1,10 @@
 ---
-name: morning-review
-description: Morning review. Closes yesterday, triages Slack interactively, reshuffles tasks, generates today's daily note.
+name: daily-review
+description: Daily review (also fires on "morning review" / "morning-review"). Closes yesterday, triages Slack interactively, reshuffles tasks, generates today's daily note.
 user_invocable: true
 ---
 
-# Morning Review
+# Daily Review
 
 Closes yesterday and sets up today. Runs interactively when the PM sits down in the morning.
 

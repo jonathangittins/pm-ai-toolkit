@@ -55,7 +55,7 @@ The skills in this repo cover:
 - **[GTM Plan](../skills/gtm-plan/)** – Walk through a GTM template section by section, pulling customer quotes and competitive data
 - **[Release Notes](../skills/release-notes/)** – Turn a video walkthrough transcript into a formatted Slack announcement
 - **[Support Article](../skills/support-article/)** – Generate help centre articles from transcripts and demos, with screenshot workflow and zip handoff
-- **[Morning Review](../skills/morning-review/)** – Close yesterday, triage Slack saved items and channels, extract meeting follow-ups, generate today's daily note
+- **[Daily Review](../skills/daily-review/)** – Close yesterday, triage Slack saved items and channels, extract meeting follow-ups, generate today's daily note
 - **[Framing Doc](../skills/framing-doc/)** – Turn conversation transcripts into a framing document with an explore-exploit lens
 - **[Kickoff Doc](../skills/post-kickoff-doc/)** – Turn a kickoff call transcript into a builder-facing reference document
 - **[Review PR](../skills/review-pr/)** – PM-perspective PR review: product scenarios and user flows, not code feedback
@@ -71,7 +71,7 @@ Skills are just markdown with instructions – no code required. You can write o
 
 ### Morning
 
-I run the [morning review](../skills/morning-review/) skill first thing. It closes yesterday's daily note (compiling what got done, what's blocked, what's next), triages Slack saved items and channel threads interactively, extracts meeting follow-ups, reshuffles the task list, and generates today's daily note with priorities mapped to quarterly goals. The whole thing runs in one session -- about 15-20 minutes of interactive triage followed by automated note generation.
+I run the [daily review](../skills/daily-review/) skill first thing. It closes yesterday's daily note (compiling what got done, what's blocked, what's next), triages Slack saved items and channel threads interactively, extracts meeting follow-ups, reshuffles the task list, and generates today's daily note with priorities mapped to quarterly goals. The whole thing runs in one session -- about 15-20 minutes of interactive triage followed by automated note generation.
 
 ### During the day
 
@@ -85,13 +85,13 @@ I run the [morning review](../skills/morning-review/) skill first thing. It clos
 
 ### Weekly review
 
-The morning review handles daily triage; the [weekly review](../skills/weekly-review/) is the Monday-morning checkpoint between daily and monthly. It runs proposal-only and produces a single 10-minute file with: backlog hygiene candidates from the active task file, roadmap delta vs last week (compared via git), signal carryover from the past 7 days of morning-review output, a long-context blind-spots prompt, stale-tasks-per-project, and support-ticket clusters by team. The skill never edits the live task list, roadmap, or project files – I act on the proposals manually.
+The daily review handles daily triage; the [weekly review](../skills/weekly-review/) is the Monday-morning checkpoint between daily and monthly. It runs proposal-only and produces a single 10-minute file with: backlog hygiene candidates from the active task file, roadmap delta vs last week (compared via git), signal carryover from the past 7 days of daily-review output, a long-context blind-spots prompt, stale-tasks-per-project, and support-ticket clusters by team. The skill never edits the live task list, roadmap, or project files – I act on the proposals manually.
 
 The two layers that earn their keep are signal carryover and blind-spots. Signal carryover catches clusters that recurred 3+ times in daily reviews but didn't get acted on. The blind-spots step runs a long-context prompt against a recent slice of work asking what patterns aren't being caught. Both do work that a daily review can't see.
 
 ### End of day
 
-At the end of the day I fill in the "Done today," "Blocked," and "Priority for tomorrow" sections in the daily note -- or I don't. The morning review handles closing yesterday automatically the next morning using done.md, the calendar, and meeting notes. It compiles a more complete picture than I would manually at 6pm. The daily note template includes these sections as placeholders either way.
+At the end of the day I fill in the "Done today," "Blocked," and "Priority for tomorrow" sections in the daily note -- or I don't. The daily review handles closing yesterday automatically the next morning using done.md, the calendar, and meeting notes. It compiles a more complete picture than I would manually at 6pm. The daily note template includes these sections as placeholders either way.
 
 ## Patterns worth stealing
 
@@ -105,7 +105,7 @@ Presenting 15-20 items as a numbered list and accepting triage decisions in a si
 
 ### Discovery lens
 
-The morning review's channel scan serves two purposes: finding threads that need a reply, and mining for product signals. A support question can be fully answered but still contain a feature request or workflow pain point. The discovery lens re-scans for these signals and cross-references them with the feedback tool -- match, partial match, or new. This turns daily channel monitoring into continuous discovery.
+The daily review's channel scan serves two purposes: finding threads that need a reply, and mining for product signals. A support question can be fully answered but still contain a feature request or workflow pain point. The discovery lens re-scans for these signals and cross-references them with the feedback tool -- match, partial match, or new. This turns daily channel monitoring into continuous discovery.
 
 ### Asynchronous triage
 
@@ -121,7 +121,7 @@ For ad-hoc work, I load frameworks manually. During a shaping session, I'll tell
 
 ## What doesn't work (yet)
 
-**Context window on long sessions.** Claude automatically compacts conversations as they grow, and plan mode helps manage context on complex tasks. The bigger consideration is keeping large data sets -- competitive research across 3-4 competitors, raw Slack exports, full task lists -- out of the primary conversation. This is why the morning review and spec skills delegate data-heavy steps to sub-agents: each sub-agent gets its own context window, does its work, and returns only a summary.
+**Context window on long sessions.** Claude automatically compacts conversations as they grow, and plan mode helps manage context on complex tasks. The bigger consideration is keeping large data sets -- competitive research across 3-4 competitors, raw Slack exports, full task lists -- out of the primary conversation. This is why the daily review and spec skills delegate data-heavy steps to sub-agents: each sub-agent gets its own context window, does its work, and returns only a summary.
 
 **MCP server reliability.** Not all MCP servers are created equally. Slack's integration has gaps – private channels may not work with `read_channel`, rate limits can slow down channel scans, and thread replies require separate API calls. Some servers require frequent re-authentication. CLIs are a reliable fallback – tools like the Atlassian CLI or Salesforce CLI can be called directly from Claude Code via Bash, and they tend to be more stable than their MCP equivalents for heavy use.
 
@@ -137,6 +137,6 @@ For ad-hoc work, I load frameworks manually. During a shaping session, I'll tell
 
 **First skill to try:** Take the [spec-prd skill](../skills/spec-prd/) and adapt it to your own spec template. Replace the section guidance with your team's conventions, point it at your feedback tool, and adjust the writing style rules. A spec skill pays for itself the first time you use it – the customer evidence research alone saves significant time.
 
-**How to iterate:** Start with what's painful. If you spend 30 minutes every morning triaging Slack, start with the morning review. If formatting release notes is tedious, build a release notes skill. If you keep copying the same spec template and filling it in manually, automate it.
+**How to iterate:** Start with what's painful. If you spend 30 minutes every morning triaging Slack, start with the daily review. If formatting release notes is tedious, build a release notes skill. If you keep copying the same spec template and filling it in manually, automate it.
 
 PM overhead follows predictable patterns, and those patterns can be encoded as instructions that Claude follows every time. You're not automating product thinking – you're automating the scaffolding around it.

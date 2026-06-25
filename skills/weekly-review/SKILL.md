@@ -1,11 +1,11 @@
 ---
 name: weekly-review
-description: Weekly review checkpoint. Runs Monday morning between the daily morning review and the monthly review. Owns backlog hygiene, roadmap delta vs last week, signal carryover from the daily review, stale-tasks-per-project, a long-context blind-spots prompt, and by-team support-ticket clusters. Proposal-only — never edits live task files. Trigger manually (typically Monday or Tuesday after a holiday).
+description: Weekly review checkpoint. Runs Monday morning between the daily review and the monthly review. Owns backlog hygiene, roadmap delta vs last week, signal carryover from the daily review, stale-tasks-per-project, a long-context blind-spots prompt, and by-team support-ticket clusters. Proposal-only — never edits live task files. Trigger manually (typically Monday or Tuesday after a holiday).
 ---
 
 # Weekly Review
 
-The missing layer between a daily morning review and a monthly review. Catches things that fall through the daily lens but don't need to wait a month.
+The missing layer between a daily review and a monthly review. Catches things that fall through the daily lens but don't need to wait a month.
 
 ## Cadence
 
@@ -229,4 +229,4 @@ Single short summary in the terminal (not in the file):
 
 - **First-run case**: if `git log --before` returns no commit (roadmap wasn't committed last week, or repo is too young), Step 3 degrades gracefully – "no prior snapshot – full roadmap shown" – and the rest of the skill runs normally. Next week's run gets a real delta.
 - **Coupling with monthly review**: a monthly review does NOT invoke weekly. Monthly reads existing weekly-review files for the month and references them. If a week was skipped, monthly will notice the gap.
-- **Retrospective**: after 4 weekly runs, audit whether the layer is earning its keep. If weekly keeps catching things morning-review misses, keep it. If redundant, fold the unique parts back into morning/monthly and retire.
+- **Retrospective**: after 4 weekly runs, audit whether the layer is earning its keep. If weekly keeps catching things daily-review misses, keep it. If redundant, fold the unique parts back into daily/monthly and retire.

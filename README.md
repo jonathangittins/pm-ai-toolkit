@@ -20,7 +20,7 @@ Claude Code skills that automate PM workflows. These are sanitised versions of w
 | [GTM Plan](skills/gtm-plan/) | Creates Go-To-Market plans through a guided section-by-section workflow. Pulls customer quotes from feedback tools, proposes tier classification, and hands off cleanly to product marketing. |
 | [Release Notes](skills/release-notes/) | Generates Slack release announcements from video transcripts. Analyses the walkthrough, structures the announcement, and outputs formatted HTML for rich-text pasting. |
 | [Support Article](skills/support-article/) | Generates help centre articles from video transcripts and demos. Includes a full style guide, screenshot workflow, and zip handoff for the support team. |
-| [Morning Review](skills/morning-review/) | Morning startup: closes yesterday's daily note, triages Slack saved items and channel threads interactively, extracts meeting follow-ups, reshuffles the task list, and generates today's daily note with priorities mapped to goals. |
+| [Daily Review](skills/daily-review/) | Daily startup: closes yesterday's daily note, triages Slack saved items and channel threads interactively, extracts meeting follow-ups, reshuffles the task list, and generates today's daily note with priorities mapped to goals. |
 | [Weekly Review](skills/weekly-review/) | Monday checkpoint between daily and monthly review. Backlog hygiene, roadmap delta vs last week, signal carryover from the daily review, stale-tasks-per-project, a long-context blind-spots prompt, and support-ticket clusters by team. Proposal-only – never edits live files. |
 | [Framing Doc](skills/framing-doc/) | Turns conversation transcripts into a framing document -- captures the problem worth solving, surveys options with an explore-exploit lens, and argues for the priority. Forked from Ryan Singer's shaping-skills. |
 | [Kickoff Doc](skills/post-kickoff-doc/) | Turns a shaped project kickoff transcript into a builder-facing reference document. Organises by territory (areas of the system), not timeline. |
@@ -54,7 +54,7 @@ Practical write-ups on how these pieces fit together.
 My daily workflow runs through Claude Code with MCP servers connecting to Slack, Canny (customer feedback), Jira, Confluence, and Things 3 (task management). The skills in this repo are the sanitised, portable layer – the patterns and methodology without the company-specific wiring.
 
 A typical day:
-- Morning: run the morning review to close yesterday, triage overnight Slack, scan channels for unanswered questions, and generate today's daily note with priorities
+- Morning: run the daily review to close yesterday, triage overnight Slack, scan channels for unanswered questions, and generate today's daily note with priorities
 - During the day: write specs, GTM plans, release notes, and review PRs using the skills
 - Weekly (Wednesday): review the feedback triage file, fill in decisions, and run validation assessments on promising ideas
 
